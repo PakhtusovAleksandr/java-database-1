@@ -1,14 +1,11 @@
 package ru.be_prog.dao;
 
 import ru.be_prog.Account;
-import ru.be_prog.util.DatabaseJdbcUtil;
 
 import java.util.List;
 import java.util.UUID;
 
 public class AccountDaoJdbcImpl implements AccountDao {
-
-    private static final DatabaseJdbcUtil DATABASE_JDBC_UTIL = new DatabaseJdbcUtil();
 
     @Override
     public void createAccountTable() {
