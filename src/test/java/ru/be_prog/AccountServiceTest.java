@@ -36,6 +36,7 @@ public class AccountServiceTest {
     void testDoubleCreateTable() {
         try {
             accountService.createAccountTable();
+            //org.postgresql.util.PSQLException: ОШИБКА: отношение "account" уже существует
             accountService.createAccountTable();
         } catch (Exception e) {
             Assertions.fail("При повторном создании таблицы произошла ошибка", e);
@@ -45,8 +46,11 @@ public class AccountServiceTest {
     @Test
     void testDoubleDropTable() {
         try {
-            accountService.createAccountTable();
-            accountService.createAccountTable();
+//            accountService.createAccountTable(); - исходник, повторяет пред тест, поэтому поправил
+//            accountService.createAccountTable();
+            accountService.dropAccountTable();
+            //org.postgresql.util.PSQLException: ОШИБКА: таблица "account" не существует
+            accountService.dropAccountTable();
         } catch (Exception e) {
             Assertions.fail("При повторном удалении таблицы произошла ошибка", e);
         }
@@ -132,7 +136,9 @@ public class AccountServiceTest {
 
             accountService.deleteAccount(ACCOUNT_ID);
 
-            Account anotherAccount = accountService.findAllAccounts().getFirst();
+            Account anotherAccount = accountService.findAllAccounts().get(0);
+            // Заменил тут метод getFirst на get(0) так как IDEA почему то ругалась
+
             if (!anotherAccount.equals(account2)) {
                 Assertions.fail("Некорректно реализовано удаление Account, был удален другой аккаунт, проверьте правильность запроса");
             }
