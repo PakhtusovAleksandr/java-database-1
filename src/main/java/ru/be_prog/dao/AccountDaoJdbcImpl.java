@@ -15,14 +15,13 @@ public class AccountDaoJdbcImpl implements AccountDao {
 
     @Override
     public void createAccountTable() {
-        Statement statement = null;
-        Connection connection = null;
-        try {
-            connection = DatabaseJdbcUtil.getMySQLConnection();
+
+        try (Connection connection = DatabaseJdbcUtil.getMySQLConnection()) {
             System.out.println("Create table in Db");
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 //Создание таблицы, думал через билдер, но так более понятно по лоховски- полный запрос виден
-            String SQL = "CREATE TABLE Account " +
+            // Добавил exists чтобы создавалась таблица когда ее еще нет
+            String SQL = "CREATE TABLE IF NOT EXISTS Account " +
                     "(id UUID not NULL, " +
                     " login VARCHAR(50), " +
                     " name VARCHAR (50), " +
@@ -34,21 +33,6 @@ public class AccountDaoJdbcImpl implements AccountDao {
             System.out.println("Table is created");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         // Реализуем создание таблицы здесь
     }
@@ -57,39 +41,23 @@ public class AccountDaoJdbcImpl implements AccountDao {
     public void dropAccountTable() {
         // Реализуем удаление таблицы здесь
 
-        Statement statement = null;
-        Connection connection = null;
-        try {
-            connection = DatabaseJdbcUtil.getMySQLConnection();
+
+        try (Connection connection = DatabaseJdbcUtil.getMySQLConnection()) {
+
             System.out.println("Delete table from Db");
-            statement = connection.createStatement();
-
-            String SQL = "DROP TABLE Account";
-
+            Statement statement = connection.createStatement();
+// Добавил в запрос exists, чтобы удалялась таблица когда она создана
+            String SQL = "DROP TABLE IF EXISTS Account";
             statement.executeUpdate(SQL);
+
             System.out.println("Table is deleted");
             statement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            // Закрываю потоки при удаление таблицы, добавил на всякий
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
+
 
     @Override
     public void deleteAllAccounts() {
