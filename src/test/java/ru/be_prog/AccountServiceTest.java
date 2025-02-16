@@ -134,8 +134,7 @@ public class AccountServiceTest {
 
             accountService.deleteAccount(ACCOUNT_ID);
 
-            Account anotherAccount = accountService.findAllAccounts().get(0);
-            // Заменил тут метод getFirst на get(0) так как IDEA почему то ругалась
+            Account anotherAccount = accountService.findAllAccounts().getFirst();
 
             if (!anotherAccount.equals(account2)) {
                 Assertions.fail("Некорректно реализовано удаление Account, был удален другой аккаунт, проверьте правильность запроса");

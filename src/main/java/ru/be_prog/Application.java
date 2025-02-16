@@ -32,28 +32,28 @@ public class Application {
         String ACCOUNT_EMAIL_4 = "test_email@test.com_4";
 
 
-        Account account = new Account(
+        Account accountFirst = new Account(
                 ACCOUNT_ID,
                 ACCOUNT_LOGIN,
                 ACCOUNT_NAME,
                 ACCOUNT_LAST_NAME,
                 ACCOUNT_EMAIL
         );
-        Account account2 = new Account(
+        Account accountSecond = new Account(
                 ACCOUNT_ID_2,
                 ACCOUNT_LOGIN_2,
                 ACCOUNT_NAME_2,
                 ACCOUNT_LAST_NAME_2,
                 ACCOUNT_EMAIL_2
         );
-        Account account3 = new Account(
+        Account accountThird = new Account(
                 ACCOUNT_ID_3,
                 ACCOUNT_LOGIN_3,
                 ACCOUNT_NAME_3,
                 ACCOUNT_LAST_NAME_3,
                 ACCOUNT_EMAIL_3
         );
-        Account account4 = new Account(
+        Account accountFourth = new Account(
                 ACCOUNT_ID_4,
                 ACCOUNT_LOGIN_4,
                 ACCOUNT_NAME_4,
@@ -61,7 +61,7 @@ public class Application {
                 ACCOUNT_EMAIL_4
         );
 
-        Account account2Update = new Account(
+        Account accountSecondUpdate = new Account(
                 ACCOUNT_ID_2,
                 ACCOUNT_LOGIN_4,
                 ACCOUNT_NAME_4,
@@ -69,7 +69,7 @@ public class Application {
                 ACCOUNT_EMAIL_4
         );
 
-        Account account3Update = new Account(
+        Account accountThirdUpdate = new Account(
                 ACCOUNT_ID_3,
                 ACCOUNT_LOGIN,
                 ACCOUNT_NAME,
@@ -80,23 +80,22 @@ public class Application {
 
         //Create DB and 4 accounts
         accountService.createAccountTable();
-        accountService.createAccount(account);
-        accountService.createAccount(account2);
-        accountService.createAccount(account3);
-        accountService.createAccount(account4);
+        accountService.createAccount(accountFirst);
+        accountService.createAccount(accountSecond);
+        accountService.createAccount(accountThird);
+        accountService.createAccount(accountFourth);
         //Update 2 accounts
-        accountService.updateAccount(account2Update);
-        accountService.updateAccount(account3Update);
+        accountService.updateAccount(accountSecondUpdate);
+        accountService.updateAccount(accountThirdUpdate);
         //Display all accounts
         accountService.findAllAccounts();
-        //Delete 2 account for UUID
-        accountService.deleteAccount(account.getId());
-        accountService.deleteAccount(account3.getId());
+        //Delete 2 accountFirst for UUID
+        accountService.deleteAccount(accountFirst.getId());
+        accountService.deleteAccount(accountThird.getId());
         //Display all accounts
         accountService.findAllAccounts();
         //Delete all accounts and DB
         accountService.deleteAllAccounts();
         accountService.dropAccountTable();
-        // здесь должен располагаться алгоритм из задачи
     }
 }
